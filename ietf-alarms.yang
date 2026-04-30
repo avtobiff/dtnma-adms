@@ -236,7 +236,8 @@ module ietf-dtnma-alarms {
          the resource. Only some categories will apply to specific
          resource objects.";
       type union {
-        type ari:null;
+        //type ari:null;
+        type empty;
         type identityref {
           amm:base "category";
         }
@@ -290,8 +291,9 @@ module ietf-dtnma-alarms {
          'manager-state' column value.
          When first created this value will be null.";
       type union {
+        //type ari:null;
+        type empty;
         type network-baseendpoint;
-        type ari:null;
       }
     }
     leaf manager-time {
@@ -299,8 +301,9 @@ module ietf-dtnma-alarms {
         "The time at which the 'manager-state' was last modified.
          When first created this value will be null.";
       type union {
+        //type ari:null;
+        type empty;
         type amm-base:timestamp;
-        type ari:null;
       }
     }
   }
