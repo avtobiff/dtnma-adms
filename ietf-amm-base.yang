@@ -7,6 +7,12 @@ module ietf-amm-base {
     prefix amm;
   }
 
+  import ietf-ari-types {
+    prefix ari;
+    reference
+      "draft-ietf-dtn-adm-yang";
+  }
+
   organization
     "Internet Engineering Task Force (IETF)" {
     amm:enum 1;
@@ -102,144 +108,144 @@ module ietf-amm-base {
   }
 
   // Named type unions
-  amm:typedef type-ref {
+  typedef type-ref {
     amm:enum 0;
     description
       "Reference to either a built-in type or a TYPEDEF object.";
-    amm:union {
-      amm:type "/ARITYPE/aritype";
-      amm:type "/ARITYPE/typedef";
+    union {
+      type "/ARITYPE/aritype";
+      type "/ARITYPE/typedef";
     }
   }
-  amm:typedef integer {
+  typedef integer {
     amm:enum 1;
     description
       "Any type which represents a discrete integer.
        This union order prefers smaller range and signed types.";
-    amm:union {
-      amm:type "/ARITYPE/byte";
-      amm:type "/ARITYPE/int";
-      amm:type "/ARITYPE/uint";
-      amm:type "/ARITYPE/vast";
-      amm:type "/ARITYPE/uvast";
+    union {
+      type ari:byte;
+      type ari:int;
+      type ari:uint;
+      type ari:vast;
+      type ari:uvast;
     }
   }
-  amm:typedef float {
+  typedef float {
     amm:enum 2;
     description
       "Any type which represents a floating point number.
        This union order prefers smaller range.";
-    amm:union {
-      amm:type "/ARITYPE/real32";
-      amm:type "/ARITYPE/real64";
+    union {
+      type ari:real32;
+      type ari:real64;
     }
   }
-  amm:typedef numeric {
+  typedef numeric {
     amm:enum 3;
     description
       "Any type which can be used with numeric expressions.";
-    amm:union {
-      amm:type "./TYPEDEF/integer";
-      amm:type "./TYPEDEF/float";
+    union {
+      type ari:integer;
+      type ari:float;
     }
   }
-  amm:typedef numeric-or-time {
+  typedef numeric-or-time {
     amm:enum 27;
     description
       "Any type which can be used with numeric or time-as-numeric
        expressions.";
-    amm:union {
-      amm:type "./TYPEDEF/numeric";
-      amm:type "./TYPEDEF/time";
+    union {
+      type ari:numeric;
+      type "./TYPEDEF/time";
     }
   }
-  amm:typedef primitive {
+  typedef primitive {
     amm:enum 4;
     description
       "Any primitive type.
        This union order prefers conversion to wide types.";
-    amm:union {
-      amm:type "./TYPEDEF/numeric";
-      amm:type "/ARITYPE/textstr";
-      amm:type "/ARITYPE/bytestr";
-      amm:type "/ARITYPE/bool";
+    union {
+      type ari:numeric;
+      type ari:textstr;
+      type ari:bytestr;
+      type ari:bool;
       // null is last option for conversion
-      amm:type "/ARITYPE/null";
+      type ari:null;
     }
   }
-  amm:typedef time {
+  typedef time {
     amm:enum 5;
     description
       "Any type which can be used with time expressions.";
-    amm:union {
-      amm:type "/ARITYPE/TP";
-      amm:type "/ARITYPE/TD";
+    union {
+      type "/ARITYPE/TP";
+      type "/ARITYPE/TD";
     }
   }
-  amm:typedef simple {
+  typedef simple {
     amm:enum 6;
     description
       "Any type which contains a single literal value (not nested).";
-    amm:union {
-      amm:type "./TYPEDEF/TIME";
-      amm:type "./TYPEDEF/PRIMITIVE";
+    union {
+      type "./TYPEDEF/TIME";
+      type ari:primitive;
     }
   }
-  amm:typedef nested {
+  typedef nested {
     amm:enum 7;
     description
       "A literal type which contains other ARI values.";
-    amm:union {
-      amm:type "/ARITYPE/AC";
-      amm:type "/ARITYPE/AM";
-      amm:type "/ARITYPE/TBL";
+    union {
+      type "/ARITYPE/AC";
+      type "/ARITYPE/AM";
+      type "/ARITYPE/TBL";
     }
   }
-  amm:typedef any {
+  typedef any {
     amm:enum 8;
     description
       "Any value representable by an ARI.";
     // These type names are built-in
-    amm:union {
-      amm:type "/ARITYPE/literal";
-      amm:type "/ARITYPE/object";
+    union {
+      type "/ARITYPE/literal";
+      type "/ARITYPE/object";
     }
   }
-  amm:typedef value-obj {
+  typedef value-obj {
     amm:enum 9;
     description
       "A reference to an object which can produce a value.";
-    amm:union {
-      amm:type "/ARITYPE/const";
-      amm:type "/ARITYPE/edd";
-      amm:type "/ARITYPE/var";
+    union {
+      type "/ARITYPE/const";
+      type "/ARITYPE/edd";
+      type "/ARITYPE/var";
     }
   }
-  amm:typedef nonce {
+  typedef nonce {
     amm:enum 10;
     description
       "This type union is used to correlate Agent-Manager messages.
        The union is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
     reference
       "draft-ietf-dtn-amm";
-    amm:union {
-      amm:type "/ARITYPE/bytestr";
-      amm:type "/ARITYPE/uvast";
-      amm:type "/ARITYPE/null";
+    union {
+      type ari:bytestr;
+      type ari:uvast;
+      type ari:null;
     }
   }
-  amm:typedef id-text {
+  typedef id-text {
     amm:enum 25;
     description
       "This type is used to define and match object text names.
        The type is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
     reference
       "draft-ietf-dtn-amm";
-    amm:type "/ARITYPE/textstr" {
+    type "/ARITYPE/textstr" {
       pattern '!?[A-Za-z_][0-9A-Za-z_\-\.]*';
     }
   }
-  amm:typedef id-int {
+  typedef id-int {
     amm:enum 26;
     description
       "This type is used to define and match object integer
@@ -247,11 +253,11 @@ module ietf-amm-base {
        The type is defined in Section 4.2.5 of draft-ietf-dtn-amm.";
     reference
       "draft-ietf-dtn-amm";
-    amm:type "/ARITYPE/int";
+    type "/ARITYPE/int";
   }
 
   // operational semantic types
-  amm:typedef counter32 {
+  typedef counter32 {
     amm:enum 11;
     description
       "A 32-bit counter with an arbitrary initial value which can
@@ -265,9 +271,9 @@ module ietf-amm-base {
     reference
       "RFC 2578: Structure of Management Information Version 2
        RFC 6021: Common YANG Data Types";
-    amm:type "/ARITYPE/uint";
+    type ari:uint;
   }
-  amm:typedef counter64 {
+  typedef counter64 {
     amm:enum 12;
     description
       "A 64-bit counter with an arbitrary initial value which can
@@ -281,9 +287,9 @@ module ietf-amm-base {
     reference
       "RFC 2578: Structure of Management Information Version 2
        RFC 6021: Common YANG Data Types";
-    amm:type "/ARITYPE/uvast";
+    type ari:uvast;
   }
-  amm:typedef gauge32 {
+  typedef gauge32 {
     amm:enum 13;
     description
       "A 32-bit value sampling some quantized measurement.
@@ -293,9 +299,9 @@ module ietf-amm-base {
     reference
       "RFC 2578: Structure of Management Information Version 2
        RFC 6021: Common YANG Data Types";
-    amm:type "/ARITYPE/int";
+    type ari:int;
   }
-  amm:typedef gauge64 {
+  typedef gauge64 {
     amm:enum 14;
     description
       "A 64-bit value sampling some quantized measurement.
@@ -305,9 +311,9 @@ module ietf-amm-base {
     reference
       "RFC 2578: Structure of Management Information Version 2
        RFC 6021: Common YANG Data Types";
-    amm:type "/ARITYPE/vast";
+    type ari:vast;
   }
-  amm:typedef timestamp {
+  typedef timestamp {
     amm:enum 15;
     description
       "A time point representing the system clock at which a specific
@@ -319,11 +325,11 @@ module ietf-amm-base {
     reference
       "RFC 2579: Textual Conventions for SMIv2
        RFC 6021: Common YANG Data Types";
-    amm:type "/ARITYPE/tp";
+    type "/ARITYPE/tp";
   }
 
   // Restrictions on AC item types for Evaluation and EXPR
-  amm:typedef eval-tgt {
+  typedef eval-tgt {
     amm:enum 16;
     description
       "A value which can be the target of an evaluation.
@@ -331,37 +337,37 @@ module ietf-amm-base {
        A reference to a value-producing object is dereferenced and
        SHALL produce a value that matches <./typedef/expr>, which
        is then evaluated.";
-    amm:union {
+    union {
       // object which produces an expression
-      amm:type "./TYPEDEF/value-obj";
+      type "./TYPEDEF/value-obj";
       // inline expression
-      amm:type "./TYPEDEF/expr";
+      type "./TYPEDEF/expr";
     }
   }
-  amm:typedef expr-item {
+  typedef expr-item {
     amm:enum 17;
     description
       "Each item of an EXPR list.";
-    amm:union {
+    union {
       // plain value for the stack
-      amm:type "/ARITYPE/literal";
+      type "/ARITYPE/literal";
       // object which produces a value for the stack
-      amm:type "./TYPEDEF/value-obj";
+      type "./TYPEDEF/value-obj";
       // operator to evaluate
-      amm:type "/ARITYPE/oper";
+      type "/ARITYPE/oper";
     }
   }
-  amm:typedef expr {
+  typedef expr {
     amm:enum 18;
     description
       "The contents of an EXPR container.";
     amm:ulist {
-      amm:type "./TYPEDEF/expr-item";
+      type "./TYPEDEF/expr-item";
     }
   }
 
   // Restrictions on AC item types for Execution and MAC
-  amm:typedef exec-tgt {
+  typedef exec-tgt {
     amm:enum 19;
     description
       "A value which can be the target of an execution.
@@ -370,66 +376,66 @@ module ietf-amm-base {
        SHALL produce a value that matches <./typedef/exec-tgt>,
        which is then executed.
        A reference to a CTRL is executed directly.";
-    amm:union {
-      amm:type "./TYPEDEF/exec-item";
+    union {
+      type "./TYPEDEF/exec-item";
       // inline MAC
-      amm:type "./TYPEDEF/mac";
+      type "./TYPEDEF/mac";
     }
   }
-  amm:typedef exec-item {
+  typedef exec-item {
     amm:enum 20;
     description
       "A reference to an object which can be executed.
        The value-object must be typed to contain a
        <./typedef/exec-tgt>.";
-    amm:union {
-      amm:type "/ARITYPE/ctrl";
+    union {
+      type "/ARITYPE/ctrl";
       // object which produces an exec-tgt
-      amm:type "./TYPEDEF/value-obj";
+      type "./TYPEDEF/value-obj";
     }
   }
-  amm:typedef mac {
+  typedef mac {
     amm:enum 21;
     description
       "The contents of a MAC container are an ordered list of
        executable values.";
     amm:ulist {
-      amm:type "./TYPEDEF/exec-item";
+      type "./TYPEDEF/exec-item";
     }
   }
 
   // Restrictions on AC item types for Reporting and RPTT
-  amm:typedef rpt-tgt {
+  typedef rpt-tgt {
     amm:enum 22;
     description
       "A value which can be the target of reporting.";
-    amm:union {
+    union {
       // object which produces an RPTT
-      amm:type "./TYPEDEF/value-obj";
+      type "./TYPEDEF/value-obj";
       // inline RPTT
-      amm:type "./TYPEDEF/rptt";
+      type "./TYPEDEF/rptt";
     }
   }
-  amm:typedef rptt-item {
+  typedef rptt-item {
     amm:enum 23;
     description
       "Each item of a RPTT.
        Each item references a value-producing object or contains an
        expression to be evaluated.";
-    amm:union {
+    union {
       // produces the report item
-      amm:type "./TYPEDEF/value-obj";
+      type "./TYPEDEF/value-obj";
       // evaluates to the report item
-      amm:type "./TYPEDEF/expr";
+      type "./TYPEDEF/expr";
     }
   }
-  amm:typedef rptt {
+  typedef rptt {
     amm:enum 24;
     description
       "The contents of a report template, encoded as the sequence
        of template items.";
     amm:ulist {
-      amm:type "./TYPEDEF/rptt-item";
+      type "./TYPEDEF/rptt-item";
     }
   }
 }
