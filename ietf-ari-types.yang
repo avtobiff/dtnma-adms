@@ -17,8 +17,8 @@ module ietf-ari-types {
     "WG Web: <http://tools.ietf.org/wg/dtn/>
      WG List: <mailto:dtn@ietf.org>
 
-     Editor: Brian Sipos
-             <mailto:brian.sipos+ietf@gmail.com>";
+     Editor: Per Andersson
+             <mailto:per@ionio.se>";
   description
     "This module defines the DTN Management Architecture (DTNMA)
      Application Resource Identifier (ARI) types within YANG.

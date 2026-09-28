@@ -22,7 +22,9 @@ module ietf-amm-base {
      WG List: <mailto:dtn@ietf.org>
 
      Editor: Brian Sipos
-             <mailto:brian.sipos+ietf@gmail.com>";
+             <mailto:brian.sipos+ietf@gmail.com>
+     Editor: Per Andersson
+             <mailto:per@ionio.se>";
   description
     "This module defines base IDENT objects and base TYPEDEF
      objects for the AMM.
