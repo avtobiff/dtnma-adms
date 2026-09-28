@@ -51,6 +51,8 @@ module ietf-amm-base {
   }
   amm:enum 25;
 
+  amm:amm;
+
   // abstract display hint hierarchy
   amm:ident display-hint {
     amm:enum 0;

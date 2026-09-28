@@ -52,6 +52,11 @@ module ietf-amm {
    * objects.
    */
 
+  extension amm {
+    description
+      "Indication that the YANG module is an ADM YANG module.";
+  }
+
   extension enum {
     argument value;
     description
