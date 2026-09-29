@@ -158,7 +158,7 @@ module ietf-amm-base {
        expressions.";
     union {
       type ari:numeric;
-      type "./TYPEDEF/time";
+      type time;
     }
   }
   typedef primitive {
@@ -189,7 +189,7 @@ module ietf-amm-base {
     description
       "Any type which contains a single literal value (not nested).";
     union {
-      type "./TYPEDEF/TIME";
+      type time;
       type ari:primitive;
     }
   }
@@ -341,9 +341,9 @@ module ietf-amm-base {
        is then evaluated.";
     union {
       // object which produces an expression
-      type "./TYPEDEF/value-obj";
+      type value-obj;
       // inline expression
-      type "./TYPEDEF/expr";
+      type expr;
     }
   }
   typedef expr-item {
@@ -354,7 +354,7 @@ module ietf-amm-base {
       // plain value for the stack
       type "/ARITYPE/literal";
       // object which produces a value for the stack
-      type "./TYPEDEF/value-obj";
+      type value-obj;
       // operator to evaluate
       type "/ARITYPE/oper";
     }
@@ -364,7 +364,7 @@ module ietf-amm-base {
     description
       "The contents of an EXPR container.";
     amm:ulist {
-      type "./TYPEDEF/expr-item";
+      type expr-item;
     }
   }
 
@@ -379,9 +379,9 @@ module ietf-amm-base {
        which is then executed.
        A reference to a CTRL is executed directly.";
     union {
-      type "./TYPEDEF/exec-item";
+      type exec-item;
       // inline MAC
-      type "./TYPEDEF/mac";
+      type mac;
     }
   }
   typedef exec-item {
@@ -393,7 +393,7 @@ module ietf-amm-base {
     union {
       type "/ARITYPE/ctrl";
       // object which produces an exec-tgt
-      type "./TYPEDEF/value-obj";
+      type value-obj;
     }
   }
   typedef mac {
@@ -402,7 +402,7 @@ module ietf-amm-base {
       "The contents of a MAC container are an ordered list of
        executable values.";
     amm:ulist {
-      type "./TYPEDEF/exec-item";
+      type exec-item;
     }
   }
 
@@ -413,9 +413,9 @@ module ietf-amm-base {
       "A value which can be the target of reporting.";
     union {
       // object which produces an RPTT
-      type "./TYPEDEF/value-obj";
+      type value-obj;
       // inline RPTT
-      type "./TYPEDEF/rptt";
+      type rptt;
     }
   }
   typedef rptt-item {
@@ -426,9 +426,9 @@ module ietf-amm-base {
        expression to be evaluated.";
     union {
       // produces the report item
-      type "./TYPEDEF/value-obj";
+      type value-obj;
       // evaluates to the report item
-      type "./TYPEDEF/expr";
+      type expr;
     }
   }
   typedef rptt {
@@ -437,7 +437,7 @@ module ietf-amm-base {
       "The contents of a report template, encoded as the sequence
        of template items.";
     amm:ulist {
-      type "./TYPEDEF/rptt-item";
+      type rptt-item;
     }
   }
 }
