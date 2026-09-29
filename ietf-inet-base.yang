@@ -55,10 +55,13 @@ module ietf-inet-base {
     reference
       "draft-ietf-dtn-adm-yang";
   }
+
+  amm:amm;
+
   amm:enum 4;
 
   // Display hints
-  amm:ident display-bstr-ipaddress {
+  identity display-bstr-ipaddress {
     amm:enum 2;
     description
       "Interpret byte string values as either IPv4 address (4-octet
@@ -66,11 +69,11 @@ module ietf-inet-base {
        human-friendly text according to RFC 4001 conventions.";
     reference
       "RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:base "//ietf/amm-base/IDENT/display-hint-bstr";
+    base amm-type:display-hint-bstr;
   }
 
   // Data types
-  amm:typedef ipv4-address {
+  typedef ipv4-address {
     amm:enum 0;
     description
       "The ipv4-address type represents an IPv4 address in binary
@@ -78,12 +81,12 @@ module ietf-inet-base {
        values.";
     reference
       "RFC 791: Internet Protocol";
-    amm:type "/aritype/bytestr" {
-      amm:display-hint "./ident/display-bstr-ipaddress";
+    type ari:bytestr {
+      amm:display-hint display-bstr-ipaddress;
       length "4";
     }
   }
-  amm:typedef ipv6-address {
+  typedef ipv6-address {
     amm:enum 1;
     description
       "The ipv6-address type represents an IPv6 address in binary
@@ -91,22 +94,22 @@ module ietf-inet-base {
        values.";
     reference
       "RFC 4291: IP Version 6 Addressing Architecture";
-    amm:type "/aritype/bytestr" {
-      amm:display-hint "./ident/display-bstr-ipaddress";
+    type ari:bytestr {
+      amm:display-hint display-bstr-ipaddress;
       length "16";
     }
   }
-  amm:typedef ip-address {
+  typedef ip-address {
     amm:enum 2;
     description
       "This type represents either an IPv4 or IPv6 address, which is
        distinguished by each having a specific valid length.";
-    amm:union {
-      amm:type "./typedef/ipv4-address";
-      amm:type "./typedef/ipv6-address";
+    type union {
+      type ipv4-address;
+      type ipv6-address;
     }
   }
-  amm:typedef zone {
+  typedef zone {
     amm:enum 4;
     description
       "The zone index is used to disambiguate identical address
@@ -120,12 +123,12 @@ module ietf-inet-base {
     reference
       "RFC 4007: IPv6 Scoped Address Architecture
        RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:union {
-      amm:type "/aritype/uint";
-      amm:type "/aritype/textstr";
+    type union {
+      type ari:uint;
+      type ari:textstr;
     }
   }
-  amm:typedef port-number {
+  typedef port-number {
     amm:enum 3;
     description
       "The port-number type represents a 16-bit port number of an
@@ -145,11 +148,11 @@ module ietf-inet-base {
        RFC 4960: Stream Control Transmission Protocol
        RFC 4340: Datagram Congestion Control Protocol (DCCP)
        RFC 4001: Textual Conventions for Internet Network Addresses";
-    amm:type "/aritype/uint" {
+    type ari:uint {
       length "0..65535";
     }
   }
-  amm:typedef domain-name {
+  typedef domain-name {
     amm:enum 5;
     description
       "The domain-name type represents a DNS domain name.  The
@@ -194,7 +197,7 @@ module ietf-inet-base {
                  (DNS SRV)
        RFC 5890: Internationalized Domain Names in Applications
                  (IDNA): Definitions and Document Framework";
-    amm:type "/aritype/textstr" {
+    type ari:textstr {
       pattern '('
             + '(([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.)*'
             + '([a-zA-Z0-9_]([a-zA-Z0-9\-_]){0,61})?[a-zA-Z0-9]\.?'
@@ -204,29 +207,29 @@ module ietf-inet-base {
   }
 
   // Endpoint types for IP
-  amm:ident ip-endpoint {
+  identity ip-endpoint {
     amm:enum 0;
     description
       "This object defines parameters for an IP endpoint
        independent of any possible transport above the network
        layer.";
-    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    base "//ietf/network-base/ident/abstract-endpoint";
     amm:parameter address {
       description
         "The endpoint network address.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter zone {
       description
         "The optional zone used to interpret the address.";
-      amm:default "null";
-      amm:union {
-        amm:type "./typedef/zone";
-        amm:type "/aritype/null";
+      default "null";
+      type union {
+        type zone;
+        type ari:null;
       }
     }
   }
-  amm:ident ip-transport {
+  identity ip-transport {
     amm:enum 1;
     description
       "This object defines parameters for any IP-based transport
@@ -235,24 +238,24 @@ module ietf-inet-base {
        This is different from parameters necessary to bind a
        transport from within that IP node, which might include
        additional information.";
-    amm:base "//ietf/network-base/ident/abstract-endpoint";
+    base "//ietf/network-base/ident/abstract-endpoint";
     amm:parameter address {
       description
         "The endpoint network address.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter port {
       description
         "The transport layer port number.";
-      amm:type "./typedef/port-number";
+      type port-number;
     }
     amm:parameter zone {
       description
         "The optional zone used to interpret the address.";
-      amm:default "null";
-      amm:union {
-        amm:type "./typedef/zone";
-        amm:type "/aritype/null";
+      default "null";
+      type union {
+        type zone;
+        type ari:null;
       }
     }
   }
@@ -281,36 +284,36 @@ module ietf-inet-base {
     amm:parameter base {
       description
         "The base address for the subnet mask.";
-      amm:type "./typedef/ip-address";
+      type ip-address;
     }
     amm:parameter prefix {
       description
         "The number of prefix bits for the subnet mask.
          When the base address is IPv4 the prefix SHALL be
          limited to no larger than 32.";
-      amm:type "/aritype/uint" {
+      type ari:uint {
         range "0..128";
       }
     }
     amm:operand value {
       description
         "The value to check for a match.";
-      amm:union {
+      type union {
         // raw address bytes
-        amm:type "./typedef/ip-address";
+        type ip-address;
         // address-as-parameter
-        amm:type "/aritype/ident" {
-          amm:base "./ident/ip-endpoint";
+        type identityref {
+          base ip-endpoint;
         }
-        amm:type "/aritype/ident" {
-          amm:base "./ident/ip-transport";
+        type identityref {
+          base ip-transport;
         }
       }
     }
     amm:result is-match {
       description
         "The result is true if the value matches the given pattern.";
-      amm:type "/aritype/bool";
+      type ari:bool;
     }
   }
 }
