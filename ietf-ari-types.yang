@@ -286,5 +286,50 @@ module ietf-ari-types {
     }
   }
 
+  extension const {
+    description
+      "The type for using a CONST as a value's type within an ADM.";
+  }
+
+  extension ctrl {
+    description
+      "The type for using a CTRL as a value's type within an ADM.";
+  }
+
+  extension edd {
+    description
+      "The type for using a EDD as a value's type within an ADM.";
+  }
+
+  extension oper {
+    description
+      "The type for using a OPER as a value's type within an ADM.";
+  }
+
+  extension sbr {
+    description
+      "The type for using a SBR as a value's type within an ADM.";
+  }
+
+  extension tbr {
+    description
+      "The type for using a TBR as a value's type within an ADM.";
+  }
+
+  extension var {
+    description
+      "The type for using a VAR as a value's type within an ADM.";
+  }
+
+  extension namespace {
+    description
+      "The type for using a NAMESPACE as a value's type within an ADM.";
+  }
+
+  extension object {
+    description
+      "The type for using a OBJECT as a value's type within an ADM.";
+  }
+
   amm:enum 0;
 }

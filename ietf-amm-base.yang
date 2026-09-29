@@ -210,7 +210,7 @@ module ietf-amm-base {
     // These type names are built-in
     type union {
       type amm:literal;
-      type "/ARITYPE/object";
+      type ari:object;
     }
   }
   typedef value-obj {
@@ -218,9 +218,9 @@ module ietf-amm-base {
     description
       "A reference to an object which can produce a value.";
     type union {
-      type "/ARITYPE/const";
-      type "/ARITYPE/edd";
-      type "/ARITYPE/var";
+      type ari:const;
+      type ari:edd;
+      type ari:var;
     }
   }
   typedef nonce {
@@ -356,7 +356,7 @@ module ietf-amm-base {
       // object which produces a value for the stack
       type value-obj;
       // operator to evaluate
-      type "/ARITYPE/oper";
+      type ari:oper;
     }
   }
   typedef expr {
@@ -391,7 +391,7 @@ module ietf-amm-base {
        The value-object must be typed to contain a
        <./typedef/exec-tgt>.";
     type union {
-      type "/ARITYPE/ctrl";
+      type ari:ctrl;
       // object which produces an exec-tgt
       type value-obj;
     }
