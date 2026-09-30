@@ -158,6 +158,37 @@ module ietf-ari-types {
       "lit-label";
   }
 
+  typedef time-fraction {
+    type decimal64 {
+      fraction-digits 0;
+    }
+    description
+      "time-fraction";
+  }
+
+  typedef lit-time {
+    type union {
+      type int32;
+      type time-fraction;
+    }
+    description
+      "lit-time";
+  }
+
+  typedef tp {
+    amm:enum 12;
+    type lit-time;
+    description
+      "TP";
+  }
+
+  typedef td {
+    amm:enum 13;
+    type lit-time;
+    description
+      "TD";
+  }
+
   typedef label {
     amm:enum 14;
     type lit-label;

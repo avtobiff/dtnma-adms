@@ -180,8 +180,8 @@ module ietf-amm-base {
     description
       "Any type which can be used with time expressions.";
     type union {
-      type "/ARITYPE/TP";
-      type "/ARITYPE/TD";
+      type ari:tp;
+      type ari:td;
     }
   }
   typedef simple {
@@ -327,7 +327,7 @@ module ietf-amm-base {
     reference
       "RFC 2579: Textual Conventions for SMIv2
        RFC 6021: Common YANG Data Types";
-    type "/ARITYPE/tp";
+    type ari:tp;
   }
 
   // Restrictions on AC item types for Evaluation and EXPR
