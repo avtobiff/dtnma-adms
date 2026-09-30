@@ -200,7 +200,7 @@ module ietf-amm-base {
     type union {
       type amm:ac;
       type amm:am;
-      type "/ARITYPE/TBL";
+      type amm:tbl;
     }
   }
   typedef any {
