@@ -94,6 +94,11 @@ module ietf-amm {
        The argument to this statement is the object name.";
   }
 
+  extension literal {
+    description
+      "The type for using a LITERAL as a value's type within an ADM.";
+  }
+
   extension parameter {
     argument name;
     description

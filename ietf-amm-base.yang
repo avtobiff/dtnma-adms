@@ -209,7 +209,7 @@ module ietf-amm-base {
       "Any value representable by an ARI.";
     // These type names are built-in
     type union {
-      type "/ARITYPE/literal";
+      type amm:literal;
       type "/ARITYPE/object";
     }
   }
@@ -352,7 +352,7 @@ module ietf-amm-base {
       "Each item of an EXPR list.";
     type union {
       // plain value for the stack
-      type "/ARITYPE/literal";
+      type amm:literal;
       // object which produces a value for the stack
       type value-obj;
       // operator to evaluate
