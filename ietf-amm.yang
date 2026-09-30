@@ -80,6 +80,13 @@ module ietf-amm {
        The argument to this statement is the object name.";
   }
 
+  extension am {
+    argument name;
+    description
+      "The type for using an AM as a value's type within an ADM.
+       The argument to this statement is the object name.";
+  }
+
   extension parameter {
     argument name;
     description

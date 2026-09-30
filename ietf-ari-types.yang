@@ -247,6 +247,37 @@ module ietf-ari-types {
       "Syntactic sugar for ari:ac.";
   }
 
+  extension am {
+    amm:enum 18;
+    argument name;
+    description
+      "An ARI MAP (AM).
+
+       Substatements 'am-key' and 'am-value' which can hold the
+       following substatements 'type', 'description', 'reference', and
+       'amm:enum'.
+
+       The 'am-key' is the key associated with a value.
+
+       The 'am-value' is the associated value for a specific 'am-key'.
+
+
+       Example:
+
+         ari:am my-map {
+           am-key {
+             type ari:textstr;
+           }
+           am-value {
+             type union {
+               type ari:uint;
+               type ari:textstr;
+             }
+           }
+         }
+      ";
+  }
+
   /* Object types */
 
   typedef literal-ari {
