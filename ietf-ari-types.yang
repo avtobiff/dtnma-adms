@@ -215,6 +215,38 @@ module ietf-ari-types {
       "ARITYPE";
   }
 
+  extension ac {
+    amm:enum 17;
+    argument name;
+    description
+      "An ARI COLLECTION (AC).
+
+       Substatements 'type' and 'values'.
+
+       The 'type' substatement contains the type information
+       for the collection.
+
+       The 'values' substatement, is a bracketed list syntax for inital
+       values for the collection.
+
+       Example:
+
+         ari:ac my-aris {
+           type union {
+             type ari:uint;
+             type ari:textstr;
+           }
+           values [1,1,2,'three'];
+         }
+      ";
+  }
+
+  typedef collection {
+    type ac;
+    description
+      "Syntactic sugar for ari:ac.";
+  }
+
   /* Object types */
 
   typedef literal-ari {

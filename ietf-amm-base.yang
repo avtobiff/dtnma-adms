@@ -198,7 +198,7 @@ module ietf-amm-base {
     description
       "A literal type which contains other ARI values.";
     type union {
-      type "/ARITYPE/AC";
+      type amm:ac;
       type "/ARITYPE/AM";
       type "/ARITYPE/TBL";
     }
