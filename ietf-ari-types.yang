@@ -1,0 +1,335 @@
+module ietf-ari-types {
+  yang-version 1.1;
+  namespace "ari://ietf/ari-types/";
+  prefix ari-types;
+
+  import ietf-amm {
+    prefix amm;
+    reference
+      "draft-ietf-dtn-amm";
+  }
+
+  organization
+    "Internet Engineering Task Force (IETF)" {
+    amm:enum 1;
+  }
+  contact
+    "WG Web: <http://tools.ietf.org/wg/dtn/>
+     WG List: <mailto:dtn@ietf.org>
+
+     Editor: Per Andersson
+             <mailto:per@ionio.se>";
+  description
+    "This module defines the DTN Management Architecture (DTNMA)
+     Application Resource Identifier (ARI) types within YANG.
+
+     The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL
+     NOT', 'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'NOT RECOMMENDED',
+     'MAY', and 'OPTIONAL' in this document are to be interpreted as
+     described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
+     they appear in all capitals, as shown here.
+
+     Copyright (c) 2025 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Revised BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX
+     (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
+     for full legal notices.";
+  reference
+    "draft-ietf-dtn-adm-yang";
+
+  revision 2025-07-03 {
+    description
+      "Updated for latest ADM document.";
+    reference
+      "draft-ietf-dtn-adm-yang";
+  }
+
+  amm:amm;
+
+  /* Typedefs */
+
+  /* DTNMA ARI Literal Types */
+
+  identity undefined {
+    description
+      "undefined";
+  }
+
+  typedef undefined {
+    type identityref {
+      base undefined;
+    }
+    default undefined;
+    description
+      "undefined";
+  }
+
+  typedef null {
+    amm:enum 0;
+    type empty;
+    description
+      "NULL";
+  }
+
+  typedef bool {
+    amm:enum 1;
+    type boolean;
+    description
+      "BOOL";
+  }
+
+  typedef byte {
+    amm:enum 2;
+    type uint8;
+    description
+      "BYTE";
+  }
+
+  typedef int {
+    amm:enum 4;
+    type int32;
+    description
+      "INT";
+  }
+
+  typedef uint {
+    amm:enum 5;
+    type uint32;
+    description
+      "UINT";
+  }
+
+  typedef vast {
+    amm:enum 6;
+    type int64;
+    description
+      "VAST";
+  }
+
+  typedef uvast {
+    amm:enum 7;
+    type uint64;
+    description
+      "UVAST";
+  }
+
+  extension real32 {
+    amm:enum 8;
+    description
+      "A 32-bit IEEE 754-2019 floating point number.";
+  }
+
+  extension real64 {
+    amm:enum 9;
+    description
+      "A 64-bit IEEE 754-2019 floating point number.";
+  }
+
+  typedef textstr {
+    amm:enum 10;
+    type string;
+    description
+      "TEXTSTR";
+  }
+
+  typedef bytestr {
+    amm:enum 11;
+    type binary;
+    description
+      "BYTESTR";
+  }
+
+  typedef lit-label {
+    type union {
+      type int32;
+      type textstr {
+        pattern "!?[A-Za-z_][A-Za-z0-9_\\-\\.]*";
+      }
+    }
+    description
+      "lit-label";
+  }
+
+  typedef time-fraction {
+    type decimal64 {
+      fraction-digits 0;
+    }
+    description
+      "time-fraction";
+  }
+
+  typedef lit-time {
+    type union {
+      type int32;
+      type time-fraction;
+    }
+    description
+      "lit-time";
+  }
+
+  typedef tp {
+    amm:enum 12;
+    type lit-time;
+    description
+      "TP";
+  }
+
+  typedef td {
+    amm:enum 13;
+    type lit-time;
+    description
+      "TD";
+  }
+
+  typedef label {
+    amm:enum 14;
+    type lit-label;
+    description
+      "LABEL";
+  }
+
+  typedef cbor {
+    amm:enum 15;
+    type binary;
+    description
+      "AMM CBOR
+
+       Arbitrary CBOR data.
+
+       As defined in RFC 8949.
+       No constraints from RFC 9254.";
+  }
+
+  typedef aritype {
+    amm:enum 16;
+    type lit-label;
+    description
+      "ARITYPE";
+  }
+
+  extension ac {
+    amm:enum 17;
+    argument name;
+    description
+      "An ARI COLLECTION (AC).
+
+       Substatements 'type' and 'values'.
+
+       The 'type' substatement contains the type information
+       for the collection.
+
+       The 'values' substatement, is a bracketed list syntax for inital
+       values for the collection.
+
+       Example:
+
+         ari:ac my-aris {
+           type union {
+             type ari:uint;
+             type ari:textstr;
+           }
+           values [1,1,2,'three'];
+         }
+      ";
+  }
+
+  typedef collection {
+    type ac;
+    description
+      "Syntactic sugar for ari:ac.";
+  }
+
+  extension am {
+    amm:enum 18;
+    argument name;
+    description
+      "An ARI MAP (AM).
+
+       Substatements 'am-key' and 'am-value' which can hold the
+       following substatements 'type', 'description', 'reference', and
+       'amm:enum'.
+
+       The 'am-key' is the key associated with a value.
+
+       The 'am-value' is the associated value for a specific 'am-key'.
+
+
+       Example:
+
+         ari:am my-map {
+           am-key {
+             type ari:textstr;
+           }
+           am-value {
+             type union {
+               type ari:uint;
+               type ari:textstr;
+             }
+           }
+         }
+      ";
+  }
+
+  /* Object types */
+
+  typedef literal-ari {
+    type string {
+      pattern "^ari:.*";
+    }
+  }
+
+  extension const {
+    description
+      "The type for using a CONST as a value's type within an ADM.";
+  }
+
+  extension ctrl {
+    description
+      "The type for using a CTRL as a value's type within an ADM.";
+  }
+
+  extension edd {
+    description
+      "The type for using a EDD as a value's type within an ADM.";
+  }
+
+  extension oper {
+    description
+      "The type for using a OPER as a value's type within an ADM.";
+  }
+
+  extension sbr {
+    description
+      "The type for using a SBR as a value's type within an ADM.";
+  }
+
+  extension tbr {
+    description
+      "The type for using a TBR as a value's type within an ADM.";
+  }
+
+  extension var {
+    description
+      "The type for using a VAR as a value's type within an ADM.";
+  }
+
+  extension namespace {
+    description
+      "The type for using a NAMESPACE as a value's type within an ADM.";
+  }
+
+  extension object {
+    description
+      "The type for using a OBJECT as a value's type within an ADM.";
+  }
+
+  amm:enum 0;
+}

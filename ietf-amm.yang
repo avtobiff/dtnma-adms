@@ -12,7 +12,9 @@ module ietf-amm {
      WG List: <mailto:dtn@ietf.org>
 
      Editor: Brian Sipos
-             <mailto:brian.sipos+ietf@gmail.com>";
+             <mailto:brian.sipos+ietf@gmail.com>
+     Editor: Per Andersson
+             <mailto:per@ionio.se>";
   description
     "This module defines the DTN Management Architecture (DTNMA)
      Application Management Model (AMM) extensions within YANG.
@@ -52,6 +54,11 @@ module ietf-amm {
    * objects.
    */
 
+  extension amm {
+    description
+      "Indication that the YANG module is an ADM YANG module.";
+  }
+
   extension enum {
     argument value;
     description
@@ -59,18 +66,44 @@ module ietf-amm {
        The argument to this statement is the integer value.";
   }
 
+  extension typedef {
+    argument name;
+    description
+      "The type for using a TYPEDEF as a value's type within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension ac {
+    argument name;
+    description
+      "The type for using an AC as a value's type within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension am {
+    argument name;
+    description
+      "The type for using an AM as a value's type within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension tbl {
+    argument name;
+    description
+      "The type for using an TBL as a value's type within an ADM.
+       The argument to this statement is the object name.";
+  }
+
+  extension literal {
+    description
+      "The type for using a LITERAL as a value's type within an ADM.";
+  }
+
   extension parameter {
     argument name;
     description
       "The schema for a formal parameter of an object.
        Order of parameters is significant within this statement.";
-  }
-
-  extension default {
-    argument value;
-    description
-      "The literal value default for a parameter or result.
-       The argument is the text form of the ARI";
   }
 
   extension init-value {
@@ -92,32 +125,12 @@ module ietf-amm {
    * This section contains extensions for AMM object definitions.
    */
 
-  extension typedef {
-    argument name;
-    description
-      "Definition of a TYPEDEF within an ADM.
-       The argument to this statement is the object name.
-       One of the type use substatements must be present.";
-  }
-
-  extension ident {
-    argument name;
-    description
-      "Definition of an IDENT within an ADM.
-       The argument to this statement is the object name.
-       An 'base' substatement must be present.";
-  }
-
   extension abstract {
     argument is-abstract;
     description
-      "The boolean abstract marking of an IDENT object.";
-  }
+      "The boolean abstract marking of an IDENT object.
 
-  extension base {
-    argument name;
-    description
-      "The argument is the base of an IDENT object.";
+       This means it is used in 'identity' statements in ADM YANG.";
   }
 
   extension const {
@@ -210,7 +223,6 @@ module ietf-amm {
       "The argument to this statement is the integer maximum
        execution count for a rule object.";
   }
-
   extension init-enabled {
     argument state;
     description
@@ -243,12 +255,6 @@ module ietf-amm {
    * This section contains extensions for defining semantic type
    * instances.
    */
-
-  extension type {
-    argument name;
-    description
-      "A reference to a built-in type or prefix-qualified typedef.";
-  }
 
   extension display-hint {
     argument ident;
@@ -307,30 +313,10 @@ module ietf-amm {
     description
       "Type for a table of values with a column schema.";
   }
-
   extension column {
     argument name;
     description
       "An individual column within a 'tblt' definition.";
-  }
-
-  extension key {
-    argument columns;
-    description
-      "Names of columns composing the row key, separated by spaces,
-       within a 'tblt' definition.";
-  }
-
-  extension unique {
-    argument columns;
-    description
-      "Names of columns composing a uniqueness constraint, separated
-       by spaces, within a 'tblt' definition.";
-  }
-
-  extension union {
-    description
-      "Semantic type for a union of other types in substatements.";
   }
 
   amm:enum 0;

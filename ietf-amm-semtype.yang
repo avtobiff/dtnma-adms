@@ -7,6 +7,10 @@ module ietf-amm-semtype {
     prefix amm;
   }
 
+  import ietf-amm-base {
+    prefix amm-type;
+  }
+
   organization
     "Internet Engineering Task Force (IETF)" {
     amm:enum 1;
@@ -71,7 +75,7 @@ module ietf-amm-semtype {
       description
         "A built-in ARITYPE or reference to TYPEDEF object being
          used.";
-      amm:type "//ietf/amm-base/TYPEDEF/type-ref";
+      type amm-base:type-ref;
     }
     // FIXME include constraints and annotations also?
   }
@@ -146,13 +150,13 @@ module ietf-amm-semtype {
          The order of these definitions is significant and correspond
          exactly with the order of columns in the TBL values.";
       amm:tblt {
-        amm:key "name";
+        key "name";
         amm:column name {
           description
             "The name of this column.
              Each name SHALL be unique within a table template.
              Each name SHALL be restricted to valid label text.";
-          amm:type "//ietf/amm-base/typedef/id-text";
+          type amm-type:id-text;
         }
         amm:column datatype {
           description
